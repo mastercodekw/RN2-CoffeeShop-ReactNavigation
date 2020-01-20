@@ -21,6 +21,8 @@ import styles from "./styles";
 
 //List
 import coffeeshops from "../CoffeeList/list";
+import { withNavigation } from "react-navigation";
+import CartIcon from "../CoffeeCart/CartIcon";
 
 class CoffeeDetail extends Component {
   state = {
@@ -39,8 +41,15 @@ class CoffeeDetail extends Component {
       option: value
     });
 
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam("coffeeName"),
+    headerRight: <CartIcon />
+  });
+
   render() {
-    const coffeeshop = coffeeshops[0];
+    const { navigation } = this.props;
+    const coffeeshopID = navigation.getParam("coffeeshopID");
+    const coffeeshop = coffeeshops.find(c => c.id == coffeeshopID);
     return (
       <Container>
         <Content>
@@ -107,4 +116,4 @@ class CoffeeDetail extends Component {
   }
 }
 
-export default CoffeeDetail;
+export default withNavigation(CoffeeDetail);
